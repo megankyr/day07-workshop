@@ -21,12 +21,6 @@ public class ClientHandler implements Runnable {
             handleClient(clientSocket);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                clientSocket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -48,9 +42,8 @@ public class ClientHandler implements Runnable {
     }
 
     private void sendAnswer(Socket clientSocket, String request) throws IOException {
-        try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
+        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             float answer = calculatorSession.evaluate(request.substring(11));
             out.println("Answer is " + answer);
         }
-    }
-}
+        }
